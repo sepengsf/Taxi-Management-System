@@ -1,4 +1,4 @@
-﻿//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 
 #include <vcl.h>
 #pragma hdrstop
@@ -19,19 +19,15 @@ __fastcall TForm3::TForm3(TComponent* Owner)
 //---------------------------------------------------------------------------
 void __fastcall TForm3::FormCreate(TObject *Sender)
 {
-	lblCompany->Caption = "RUBBERMAN TAXI RANK";
-	lblCompany->Font->Size = 28;
-    lblCompany->Font->Color = clNavy;
-
+	lblCompany->Caption = "CINDY TAXI RANK";
+	lblCompany->Font->Size = 30;
+    lblCompany->Font->Color = clRed;
 
 	lstDisplay->Items->Clear();
 
-	lstDisplay->Items->Add("Developer: MUZI Thami NKOSI");
-	lstDisplay->Items->Add("Student Number: 212002321");
-	lstDisplay->Items->Add("Course: TPG201T");
-	lstDisplay->Items->Add("Project: Taxi Management System");
-
-
+	lstDisplay->Items->Add("Developed by: Sindisiwe F Sepeng");
+	lstDisplay->Items->Add("Student No.: 212179361");
+	lstDisplay->Items->Add("Course: TPG201T - TAXI MANAGEMENT SYSTEM");
 
     sgQueueLog->ColCount = 5;
     sgQueueLog->RowCount = 1;
@@ -54,18 +50,17 @@ void __fastcall TForm3::FormCreate(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-//Loads queue_log.txt and trip_assignment_log.txt into StringGrids
+//Load queue_log.txt and trip_assignment_log.txt 
 void __fastcall TForm3::btnLoadDataClick(TObject *Sender)
 {
  TStringList *list = new TStringList;
 
-    // ================= QUEUE LOG =================
     list->LoadFromFile("queue_log.txt");
 
-    sgQueueLog->RowCount = 1;   // keep header
-    int qRow = 1;
+    sgQueueLog->RowCount = 1;   //header
+    int queueRow = 1;
 
-    for (int i = 1; i < list->Count; i++) // skip header
+    for (int i = 1; i < list->Count; i++) 
     {
         TStringList *row = new TStringList;
         row->Delimiter = ',';
@@ -73,96 +68,86 @@ void __fastcall TForm3::btnLoadDataClick(TObject *Sender)
 
         sgQueueLog->RowCount++;
 
-        // File format:
-        // Date, Time, RankID, DriverID
-        sgQueueLog->Cells[0][qRow] = row->Strings[3]; // Driver
-        sgQueueLog->Cells[1][qRow] = row->Strings[2]; // Rank
-        sgQueueLog->Cells[2][qRow] = IntToStr(qRow);  // Position
-        sgQueueLog->Cells[3][qRow] = row->Strings[1]; // Time In
+        sgQueueLog->Cells[0][queueRow] = row->Strings[3]; 
+        sgQueueLog->Cells[1][queueRow] = row->Strings[2]; 
+        sgQueueLog->Cells[2][queueRow] = IntToStr(queueRow);  
+        sgQueueLog->Cells[3][queueRow] = row->Strings[1]; 
 
-        // Waiting Time = position * 5 minutes
         sgQueueLog->Cells[4][qRow] =
-            IntToStr(qRow * 5) + " min";
+            IntToStr(queueRow * 5) + " min";
 
-        qRow++;
+        queueRow++;
         delete row;
     }
 
-    // ================= TRIP ASSIGNMENT LOG =================
     list->Clear();
     list->LoadFromFile("trip_assignment_log.txt");
 
     sgTripLog->RowCount = 1;
-    int tRow = 1;
+    int tripRow = 1;
 
-    for (int i = 1; i < list->Count; i++) // skip header
+    for (int i = 1; i < list->Count; i++) 
     {
         TStringList *row = new TStringList;
         row->Delimiter = ',';
         row->DelimitedText = list->Strings[i];
 
         sgTripLog->RowCount++;
+      
+        sgTripLog->Cells[0][tripRow] = row->Strings[2]; 
+        sgTripLog->Cells[1][tripRow] = row->Strings[3]; 
+        sgTripLog->Cells[2][tripRow] = row->Strings[4]; 
+        sgTripLog->Cells[3][tripRow] = row->Strings[1]; 
 
-        // File format:
-        // Date, Time, DriverID, RankFrom, RankTo
-        sgTripLog->Cells[0][tRow] = row->Strings[2]; // Driver
-        sgTripLog->Cells[1][tRow] = row->Strings[3]; // From Rank
-        sgTripLog->Cells[2][tRow] = row->Strings[4]; // To Rank
-        sgTripLog->Cells[3][tRow] = row->Strings[1]; // Trip Time
-
-        // Estimated Time (random realistic value)
-        sgTripLog->Cells[4][tRow] =
+        sgTripLog->Cells[4][tripRow] =
             IntToStr(Random(15) + 10) + " min";
 
-		tRow++;
+		tripRow++;
 		delete row;
 	}
 
-	// ================= RECORD COUNT =================
 	lblRecordCount->Caption =
-		"Records: " + IntToStr(qRow - 1);
+		"Records: " + IntToStr(queueRow - 1);
 
 	delete list;
 
 }
 //---------------------------------------------------------------------------
-//  Filters queue log by Driver or Rank& hide rows does not match
 void __fastcall TForm3::btnApplyFilterClick(TObject *Sender)
 {
 
-	String filterValue = InputBox("Filter", "Enter value:", "");
+	String filterVal = InputBox("Filter", "Enter value:", "");
 	int filterCol = (rgFilter->ItemIndex == 0) ? 1 : 0;
 
 	int count = 0;
 
 	for(int i = 1; i < sgQueueLog->RowCount; i++)
 	{
-		if(sgQueueLog->Cells[filterCol][i] == filterValue)
+		if(sgQueueLog->Cells[filterCol][i] == filterVal)
 		{
 			sgQueueLog->RowHeights[i] = 24;
 			count++;
 		}
 		else
 		{
-			sgQueueLog->RowHeights[i] = 0; // hide row
+			sgQueueLog->RowHeights[i] = 0; 
 		}
 	}
 }
 //---------------------------------------------------------------------------
-// Purpose : Connects application to TaxiDB.accdb database
 void __fastcall TForm3::btnConnectClick(TObject *Sender)
 {
 
-String dbPath = ExtractFilePath(Application->ExeName) + "TaxiDB.accdb";
+String path = ExtractFilePath(Application->ExeName) + "TaxiDB.accdb";
 
   Dmod->ADOConnection1->ConnectionString =
 	"Provider=Microsoft.ACE.OLEDB.12.0;"
-	"Data Source=" + dbPath;
+	"Data Source=" + path;
 	Dmod->ADOConnection1->Connected = false;
 	  Dmod->ADOConnection1->LoginPrompt = false;
 	   Dmod->ADOConnection1->ConnectionString =
 			"Provider=Microsoft.ACE.OLEDB.12.0;"
-			"Data Source=" + dbPath + ";"
+			"Data Source=" + path + ";"
 			"Persist Security Info=False;";
 
 	try
@@ -170,11 +155,11 @@ String dbPath = ExtractFilePath(Application->ExeName) + "TaxiDB.accdb";
 
 
 		Dmod->ADOConnection1->Connected = true;
-        		// 3. Link the Grid components
+        		
 			Dmod->ADOQuery1->Connection = Dmod->ADOConnection1;
 			Dmod->ADOQuery2->Connection = Dmod->ADOConnection1;
 			Dmod->ADOQuery3->Connection = 	Dmod->ADOConnection1;
-							 // 🔄 Populate schedules ONLY if empty
+							 
 if (SchedulesEmpty())
 {
 	PopulateSchedules();
@@ -185,17 +170,13 @@ if (SchedulesEmpty())
 		lblStatus->Caption = "Status: Connected";
 		ShowMessage("Database connected successfully");
         LoadFareGrids();
-		// Populate schedules ONCE after connecting
-		   LoadRoutes();
-
-
-
+        LoadRoutes();
 
 
 			Dmod->DataSource1->DataSet = 	Dmod->ADOQuery1;
 			DBGrid1->DataSource = 	Dmod->DataSource1;
 
-			// 4. The Complex SQL Join (Drivers + Schedules + Vehicles)
+			
 			Dmod->ADOQuery1->Close();
 			Dmod->ADOQuery1->SQL->Clear();
 			Dmod->ADOQuery1->SQL->Add("SELECT D.DriverName, D.DriverID, V.Model, V.VehicleID, S.MaxPassengers ");
@@ -212,9 +193,6 @@ if (SchedulesEmpty())
 	}
 }
 //---------------------------------------------------------------------------
-
-
-
 void __fastcall TForm3::LoadQueueLog(std::vector<TDriverInfo> &drivers)
 {
 	drivers.clear();
@@ -254,11 +232,10 @@ void __fastcall TForm3::btnSimulateTripsClick(TObject *Sender)
 
 	if (!Dmod->ADOConnection1->Connected)
 	{
-		ShowMessage("Connect to database first");
+		ShowMessage("Connect to database");
 		return;
 	}
 
-	// FORCE connections
 	Dmod->ADOQuery2->Connection = Dmod->ADOConnection1;
 	Dmod->ADOQuery3->Connection = Dmod->ADOConnection1;
 
@@ -266,7 +243,7 @@ void __fastcall TForm3::btnSimulateTripsClick(TObject *Sender)
 
 	for (int i = 0; i < 10; i++)
 	{
-		// Get random ScheduleID
+	
 		Dmod->ADOQuery2->Close();
 		Dmod->ADOQuery2->SQL->Text =
 			"SELECT TOP 1 ScheduleID FROM Schedules ORDER BY Rnd()";
@@ -281,15 +258,14 @@ void __fastcall TForm3::btnSimulateTripsClick(TObject *Sender)
 		int passengers = Random(15) + 1;
 		TDateTime tripDate = Now() - Random(7);
 
-		// Insert trip
 		Dmod->ADOQuery3->Close();
 		Dmod->ADOQuery3->SQL->Text =
 			"INSERT INTO Trips (TripDate, ScheduleID, PassengersBoarded) "
-			"VALUES (:dt, :sid, :pax)";
+			"VALUES (:tdate, :schedule, :pas)";
 
-		Dmod->ADOQuery3->Parameters->ParamByName("dt")->Value = tripDate;
-		Dmod->ADOQuery3->Parameters->ParamByName("sid")->Value = scheduleID;
-		Dmod->ADOQuery3->Parameters->ParamByName("pax")->Value = passengers;
+		Dmod->ADOQuery3->Parameters->ParamByName("tdate")->Value = tripDate;
+		Dmod->ADOQuery3->Parameters->ParamByName("schedule")->Value = scheduleID;
+		Dmod->ADOQuery3->Parameters->ParamByName("pas")->Value = passengers;
 
 		Dmod->ADOQuery3->ExecSQL();
 	}
@@ -299,16 +275,13 @@ void __fastcall TForm3::btnSimulateTripsClick(TObject *Sender)
 
 
 }
-
 //---------------------------------------------------------------------------
-
-
 void __fastcall TForm3::Button1Click(TObject *Sender)
 {
 
 	if (!Dmod->ADOConnection1->Connected)
 	{
-		ShowMessage("Connect to database first");
+		ShowMessage("Connect to database");
 		return;
 	}
 
@@ -349,18 +322,13 @@ void __fastcall TForm3::Button1Click(TObject *Sender)
 	}
 
 }
-
-
 //---------------------------------------------------------------------------
-//  Generates taxi trip report
-
 void __fastcall TForm3::btnSaveReportClick(TObject *Sender)
 {
 	if (SaveDialog1->Execute())
 		RichEditReport->Lines->SaveToFile(SaveDialog1->FileName);
 }
 //---------------------------------------------------------------------------
-//Loads routes from database into combo box
 void TForm3::LoadRoutes()
 {
 
@@ -371,7 +339,7 @@ void TForm3::LoadRoutes()
 	cmbRoutes->Clear();
 
 	Dmod->ADOQuery3->Close();
-	Dmod->ADOQuery3->Connection = Dmod->ADOConnection1; // IMPORTANT
+	Dmod->ADOQuery3->Connection = Dmod->ADOConnection1;
 	Dmod->ADOQuery3->SQL->Clear();
 	Dmod->ADOQuery3->SQL->Text =
 		"SELECT RankFrom, RankTo, DistanceKm FROM Routes";
@@ -380,7 +348,7 @@ void TForm3::LoadRoutes()
 
 	while (!Dmod->ADOQuery3->Eof)
 	{
-		String routeText =
+		String text =
 			Dmod->ADOQuery3->FieldByName("RankFrom")->AsString +
 			" → " +
 			Dmod->ADOQuery3->FieldByName("RankTo")->AsString +
@@ -391,15 +359,10 @@ void TForm3::LoadRoutes()
 		int distance =
 			Dmod->ADOQuery3->FieldByName("DistanceKm")->AsInteger;
 
-		cmbRoutes->Items->AddObject(routeText, (TObject*)distance);
+		cmbRoutes->Items->AddObject(text, (TObject*)distance);
 
 		Dmod->ADOQuery3->Next();
 	}
-
-
-
-
-
 
 }
 
@@ -423,28 +386,26 @@ void TForm3::LoadFareGrids()
 	sgRoutes->Cells[1][0] = "Fare (R)";
 
 	// Load Routes from DB
-	TADOQuery *q = new TADOQuery(NULL);
+	TADOQuery *query = new TADOQuery(NULL);
 	try
 	{
-		q->Connection = Dmod->ADOConnection1;
-		q->SQL->Text =
+		query->Connection = Dmod->ADOConnection1;
+		query->SQL->Text =
 			"SELECT RankFrom, RankTo, DistanceKm FROM Routes";
-		q->Open();
+		query->Open();
 
 		int row = 1;
-		while (!q->Eof)
+		while (!query->Eof)
 		{
 			sgRanks->RowCount++;
 			sgRoutes->RowCount++;
 
-			// Rank grid
 			sgRanks->Cells[0][row] =
-				q->FieldByName("RankFrom")->AsString;
+				query->FieldByName("RankFrom")->AsString;
 			sgRanks->Cells[1][row] =
-				q->FieldByName("RankTo")->AsString;
+				query->FieldByName("RankTo")->AsString;
 
-			// Route grid
-			int dist = q->FieldByName("DistanceKm")->AsInteger;
+			int dist = query->FieldByName("DistanceKm")->AsInteger;
 			double fare = dist * 10.0;
 
 			sgRoutes->Cells[0][row] = IntToStr(dist);
@@ -452,22 +413,21 @@ void TForm3::LoadFareGrids()
 				FormatFloat("0.00", fare);
 
 			row++;
-			q->Next();
+			query->Next();
 		}
 	}
 	__finally
 	{
-		delete q;
+		delete query;
 	}
 }
 
- //   - Calculates base fare,Applies discount and Displays ticket details
 void __fastcall TForm3::btnCalcFareClick(TObject *Sender)
 {
 
 	if (cmbRoutes->ItemIndex < 0)
 	{
-		ShowMessage("Please select a route");
+		ShowMessage("Choose a route");
 		return;
 	}
 
@@ -491,8 +451,6 @@ void __fastcall TForm3::btnCalcFareClick(TObject *Sender)
 
 }
 //---------------------------------------------------------------------------
-
- //Saves fare ticket to file
 void __fastcall TForm3::btnSaveTicketClick(TObject *Sender)
 {
   if (SaveDialog2->Execute())
@@ -500,7 +458,6 @@ void __fastcall TForm3::btnSaveTicketClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-	 // Automatically creates schedules for each driver
 void TForm3::PopulateSchedules()
 {
 
@@ -510,43 +467,40 @@ void TForm3::PopulateSchedules()
 	TADOQuery *q = new TADOQuery(NULL);
 	try
 	{
-		q->Connection = Dmod->ADOConnection1;
+		query->Connection = Dmod->ADOConnection1;
 
-		// 1️⃣ DELETE TRIPS FIRST (FK dependency)
-		q->SQL->Text = "DELETE FROM Trips";
-		q->ExecSQL();
+		query->SQL->Text = "DELETE FROM Trips";
+		query->ExecSQL();
 
-		// 2️⃣ DELETE SCHEDULES
-		q->SQL->Text = "DELETE FROM Schedules";
-		q->ExecSQL();
+		query->SQL->Text = "DELETE FROM Schedules";
+		query->ExecSQL();
 
-		// 3️⃣ GET DRIVERS
-		q->SQL->Text = "SELECT DriverID FROM Drivers";
-		q->Open();
+		query->SQL->Text = "SELECT DriverID FROM Drivers";
+		query->Open();
 
 		while (!q->Eof)
 		{
-			int driverID = q->FieldByName("DriverID")->AsInteger;
+			int driverID = query->FieldByName("DriverID")->AsInteger;
 			int vehicleID = Random(10) + 1;
 			int maxPassengers = 15;
 
-			TADOQuery *ins = new TADOQuery(NULL);
-			ins->Connection = Dmod->ADOConnection1;
-			ins->SQL->Text =
+			TADOQuery *insert = new TADOQuery(NULL);
+			insert->Connection = Dmod->ADOConnection1;
+			insert->SQL->Text =
 				"INSERT INTO Schedules (DriverID, VehicleID, MaxPassengers) "
 				"VALUES (" +
 				IntToStr(driverID) + ", " +
 				IntToStr(vehicleID) + ", " +
 				IntToStr(maxPassengers) + ")";
 			ins->ExecSQL();
-			delete ins;
+			delete insert;
 
-			q->Next();
+			query->Next();
 		}
 	}
 	__finally
 	{
-		delete q;
+		delete query;
 	}
 
 
@@ -585,7 +539,7 @@ void __fastcall TForm3::btnDeleteTripsClick(TObject *Sender)
 {
 	if (!Dmod->ADOConnection1->Connected)
 	{
-		ShowMessage("Connect to database first");
+		ShowMessage("Connect to database");
 		return;
 	}
 
