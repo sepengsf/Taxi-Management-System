@@ -1,0 +1,19 @@
+object DataModule1: TDataModule1
+  Height = 1080
+  Width = 1440
+  PixelsPerInch = 144
+  object ADOConnection1: TADOConnection
+    Left = 145
+    Top = 176
+  end
+  object ADODataSet1: TADODataSet
+    Parameters = <>
+    Left = 376
+    Top = 192
+  end
+  object ADOQuery1: TADOQuery
+    Parameters = <>
+    Left = 576
+    Top = 192
+  end
+end

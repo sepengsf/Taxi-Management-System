@@ -1,0 +1,27 @@
+//---------------------------------------------------------------------------
+
+#ifndef Unit1H
+#define Unit1H
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <Data.DB.hpp>
+#include <Data.Win.ADODB.hpp>
+//---------------------------------------------------------------------------
+class TDmod : public TDataModule
+{
+__published:	// IDE-managed Components
+	TADOConnection *ADOConnection1;
+	TADODataSet *ADODataSet1;
+	TADOQuery *ADOQuery1;
+	TDataSource *DataSource1;
+	TADOQuery *ADOQuery2;
+	TADOQuery *ADOQuery3;
+	TDataSource *DataSource2;
+private:	// User declarations
+public:		// User declarations
+	__fastcall TDmod(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TDmod *Dmod;
+//---------------------------------------------------------------------------
+#endif

@@ -1,0 +1,129 @@
+//---------------------------------------------------------------------------
+
+#ifndef Unit3H
+#define Unit3H
+#include <System.Classes.hpp>
+#include <Vcl.Forms.hpp>
+#include <Data.DB.hpp>
+#include <FireDAC.Comp.Client.hpp>
+#include <FireDAC.Comp.DataSet.hpp>
+#include <FireDAC.DApt.hpp>
+#include <FireDAC.DApt.Intf.hpp>
+#include <FireDAC.DatS.hpp>
+#include <FireDAC.Phys.Intf.hpp>
+#include <FireDAC.Stan.Async.hpp>
+#include <FireDAC.Stan.Error.hpp>
+#include <FireDAC.Stan.Intf.hpp>
+#include <FireDAC.Stan.Option.hpp>
+#include <FireDAC.Stan.Param.hpp>
+#include <Vcl.ComCtrls.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.DBGrids.hpp>
+#include <Vcl.Dialogs.hpp>
+#include <Vcl.ExtCtrls.hpp>
+#include <Vcl.Grids.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <vector>
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <Vcl.Forms.hpp>
+#include <Vcl.ComCtrls.hpp>
+#include <Vcl.ExtCtrls.hpp>
+#include <Vcl.Grids.hpp>
+#include <Data.DB.hpp>
+#include <Vcl.DBGrids.hpp>
+#include <FireDAC.Comp.Client.hpp>
+#include <FireDAC.Comp.DataSet.hpp>
+#include <FireDAC.DApt.hpp>
+#include <FireDAC.DApt.Intf.hpp>
+#include <FireDAC.DatS.hpp>
+#include <FireDAC.Phys.Intf.hpp>
+#include <FireDAC.Stan.Async.hpp>
+#include <FireDAC.Stan.Error.hpp>
+#include <FireDAC.Stan.Intf.hpp>
+#include <FireDAC.Stan.Option.hpp>
+#include <FireDAC.Stan.Param.hpp>
+#include <Vcl.Dialogs.hpp>
+#include <vector>
+                   //#include <vector>   // VERY important
+
+//---------------------------------------------------------------------------
+struct TDriverInfo
+{
+    String Driver;
+    String Rank;
+};
+
+struct TScheduleInfo {
+    int ScheduleID;
+    String DriverID;
+    String VehicleID;
+    int MaxPassengers;
+    int RouteID;
+    int VehicleCapacity;
+    double DistanceKm;
+};
+class TForm3 : public TForm
+{
+__published:	// IDE-managed Components
+	TPageControl *PageControl1;
+	TTabSheet *TAB1;
+	TTabSheet *TAB2;
+	TTabSheet *TAB3;
+	TTabSheet *TAB4;
+	TTabSheet *TAB5;
+	TTabSheet *TAB6;
+	TLabel *lblCompany;
+	TListBox *ListBoxDev;
+	TLabel *lblRecordCount;
+	TButton *btnLoadData;
+	TButton *btnApplyFilter;
+	TRadioGroup *rgFilter;
+	TStringGrid *sgTripLog;
+	TStringGrid *sgQueueLog;
+	TDBGrid *DBGrid1;
+	TButton *btnConnect;
+	TLabel *lblStatus;
+	TRichEdit *RichEditReport;
+	TButton *Button1;
+	TButton *btnSaveReport;
+	TFDQuery *qryReport;
+	TSaveDialog *SaveDialog1;
+	TStringGrid *sgRanks;
+	TStringGrid *sgRoutes;
+	TComboBox *cmbRoutes;
+	TRichEdit *RichEditTicket;
+	TButton *btnCalcFare;
+	TButton *btnSaveTicket;
+	TFDQuery *qryTrips;
+	TSaveDialog *SaveDialog2;
+	TDBGrid *DBGridTrips;
+	TButton *btnSimulateTrips;
+	TButton *btnDeleteTrips;
+	TFDQuery *FDQuery2;
+	void __fastcall FormCreate(TObject *Sender);
+	void __fastcall btnLoadDataClick(TObject *Sender);
+	void __fastcall btnApplyFilterClick(TObject *Sender);
+	void __fastcall btnConnectClick(TObject *Sender);
+	void __fastcall btnSimulateTripsClick(TObject *Sender);
+	void __fastcall Button1Click(TObject *Sender);
+	void __fastcall btnSaveReportClick(TObject *Sender);
+	void __fastcall btnCalcFareClick(TObject *Sender);
+	void __fastcall btnSaveTicketClick(TObject *Sender);
+
+private:	// User declarations
+bool GetScheduleForDriver(const String &driverID, TScheduleInfo &info);
+  void PopulateSchedules() ;
+	void RefreshTripsGrid();
+	void LoadQueueLog();
+   void LoadRoutes();
+	  void __fastcall LoadQueueLog(std::vector<TDriverInfo> &drivers);
+public:		// User declarations
+	__fastcall TForm3(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm3 *Form3;
+//---------------------------------------------------------------------------
+#endif

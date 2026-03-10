@@ -1,0 +1,51 @@
+Date,Time,DriverID,PickupLocation,DropoffLocation,EstimatedDistanceKm
+2025-08-10,21:14:51,D148,Central Rank,Suburb,26.68
+2025-04-03,01:46:50,D165,Central Rank,Industrial Park,7.26
+2025-11-15,20:56:59,D120,Airport Rank,Industrial Park,16.97
+2025-07-02,14:10:10,D177,Hospital Rank,University,25.26
+2025-05-10,03:44:26,D181,Station Rank,City Center,13.9
+2025-06-30,17:18:52,D150,Airport Rank,University,28.01
+2025-09-05,17:54:43,D189,Mall Rank,City Center,18.2
+2025-08-09,00:38:14,D104,Hospital Rank,Beachfront,7.54
+2025-10-30,22:46:32,D187,Airport Rank,Industrial Park,23.17
+2025-04-05,01:23:54,D157,Central Rank,Beachfront,17.66
+2025-05-17,11:52:05,D189,Mall Rank,University,20.96
+2025-09-28,17:37:42,D142,Central Rank,Industrial Park,27.79
+2025-01-30,08:14:52,D170,Mall Rank,Beachfront,23.73
+2025-03-08,21:53:39,D181,Airport Rank,Industrial Park,13.17
+2025-08-25,19:49:35,D139,Station Rank,University,27.57
+2025-10-10,07:26:14,D140,Hospital Rank,University,6.56
+2025-09-20,15:59:41,D182,Station Rank,University,24.27
+2025-06-22,20:35:29,D164,Airport Rank,Suburb,16.36
+2025-06-04,01:25:36,D155,Station Rank,City Center,5.68
+2025-10-01,21:11:25,D173,Central Rank,Suburb,29.23
+2025-08-19,00:24:38,D137,Hospital Rank,Suburb,13.13
+2025-01-26,11:44:55,D111,Mall Rank,Beachfront,25.23
+2025-04-02,17:01:00,D109,Central Rank,City Center,19.2
+2025-02-21,17:36:22,D104,Airport Rank,City Center,19.67
+2025-02-17,22:50:40,D190,Station Rank,University,28.56
+2025-03-19,23:30:32,D139,Central Rank,University,2.2
+2025-08-13,10:48:45,D123,Airport Rank,Beachfront,27.21
+2025-12-30,07:52:54,D143,Hospital Rank,University,3.43
+2025-06-28,07:20:00,D183,Hospital Rank,Suburb,13.09
+2025-09-18,22:14:36,D120,Airport Rank,Beachfront,7.31
+2025-10-23,07:53:05,D156,Central Rank,Industrial Park,15.69
+2025-06-18,11:34:53,D199,Central Rank,Suburb,29.69
+2025-02-06,21:47:47,D160,Hospital Rank,University,4.92
+2025-05-29,04:59:55,D118,Mall Rank,University,19.26
+2025-09-05,09:03:51,D158,Mall Rank,Industrial Park,8.62
+2025-12-23,04:53:36,D197,Hospital Rank,Industrial Park,7.34
+2025-09-04,03:45:47,D133,Station Rank,University,26.29
+2025-03-03,04:25:41,D106,Hospital Rank,University,23.61
+2025-02-19,10:46:31,D121,Airport Rank,Industrial Park,2.47
+2025-06-23,19:39:41,D103,Central Rank,Industrial Park,7.75
+2025-01-16,18:30:19,D184,Airport Rank,City Center,22.16
+2025-01-01,23:23:46,D178,Airport Rank,Beachfront,4.01
+2025-08-04,18:38:39,D117,Mall Rank,City Center,21.14
+2025-09-18,03:37:45,D179,Airport Rank,City Center,23.48
+2025-03-12,11:24:16,D152,Mall Rank,Industrial Park,17.62
+2025-05-28,03:21:32,D115,Mall Rank,Industrial Park,16.55
+2025-02-27,00:05:20,D156,Mall Rank,Beachfront,26.06
+2025-06-15,21:48:48,D123,Station Rank,City Center,22.62
+2025-12-04,19:46:58,D127,Airport Rank,Industrial Park,22.48
+2025-11-20,01:07:23,D152,Airport Rank,Beachfront,25.04
